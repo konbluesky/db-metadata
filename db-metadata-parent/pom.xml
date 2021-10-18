@@ -179,19 +179,4 @@
             </snapshots>
         </repository>
     </repositories>
-
-    <!--    <distributionManagement>-->
-    <!--        <repository>-->
-    <!--            <id>asoco-nexus-release</id>-->
-    <!--            <name>Asoco Nexus Release Repository</name>-->
-    <!--            &lt;!&ndash;            <url>http://nexus.asoco.com.cn/nexus/content/groups/public/</url>&ndash;&gt;-->
-    <!--            <url>http://nexus.asoco.com.cn/nexus/content/repositories/releases/</url>-->
-    <!--        </repository>-->
-    <!--        <snapshotRepository>-->
-    <!--            <id>asoco-nexus-snapshot</id>-->
-    <!--            <name>Asoco Nexus Snapshot Repository</name>-->
-    <!--            &lt;!&ndash;            <url>http://nexus.asoco.com.cn/nexus/content/groups/public/</url>&ndash;&gt;-->
-    <!--            <url>http://nexus.asoco.com.cn/nexus/content/repositories/snapshots/</url>-->
-    <!--        </snapshotRepository>-->
-    <!--    </distributionManagement>-->
 </project>
