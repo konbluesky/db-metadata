@@ -86,7 +86,7 @@ public class MysqlService implements DbService {
         Optional<String> schemaName = showSchema().stream().filter(s -> schema.equalsIgnoreCase(s)).findFirst();
 
         List<Record> records = null;
-        String showColumns = "select * from information_schema.columns where table_schema=? and table_name=?";
+        String showColumns = "select * from information_schema.columns where table_schema=? and table_name=? order by ordinal_position";
         if (schemaName.isPresent()) {
             records = Db.use(schema).find(showColumns, schema, tableName);
         } else {
