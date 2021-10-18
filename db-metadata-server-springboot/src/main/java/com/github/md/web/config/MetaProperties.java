@@ -29,6 +29,10 @@ public class MetaProperties {
     @Data
     public static class ServerProperties {
 
+        private String urlPrefix;
+
+        private String[] urlEffectJavaPackage = new String[0];
+
         private MetaObjectProperties metaObject = new MetaObjectProperties();
 
         private UploadProperties upload = new UploadProperties();

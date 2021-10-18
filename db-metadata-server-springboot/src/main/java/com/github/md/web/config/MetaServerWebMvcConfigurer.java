@@ -7,7 +7,10 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.github.md.web.config.json.FastJsonRecordSerializer;
 import com.github.md.web.config.json.JsonParameterToMapHandler;
 import com.github.md.web.config.register.DynamicRegisterControllerHandlerMapping;
+import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Record;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -30,20 +33,35 @@ import java.util.List;
  * <p> @author konbluesky </p>
  */
 @Configuration
+@Slf4j
 public class MetaServerWebMvcConfigurer implements WebMvcConfigurer, WebMvcRegistrations {
+
+    @Autowired
+    MetaProperties metaProperties;
 
     /**
      * 可定制MetaServer系统URl的前缀
+     *
      * @return
      */
     @Override
     public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
-        return new DynamicRegisterControllerHandlerMapping();
+        if (StrKit.notBlank(metaProperties.getServer().getUrlPrefix())) {
+            return new DynamicRegisterControllerHandlerMapping();
+        } else {
+            return new RequestMappingHandlerMapping();
+        }
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        String defaultPatterns = "/**";
+        if (StrKit.notBlank(metaProperties.getServer().getUrlPrefix())) {
+            defaultPatterns = metaProperties.getServer().getUrlPrefix();
+            log.info("Bind [JsonParameterToMapHandler] to [{}] series url", defaultPatterns);
+        }
         InterceptorRegistration jsonParameterToMap = registry.addInterceptor(new JsonParameterToMapHandler());
+        jsonParameterToMap.addPathPatterns(defaultPatterns);
     }
 
     @Override

@@ -21,8 +21,12 @@ logging:
 md:
   dev-mode: true
   server:
-#    upload:
-#      base-upload-path: ./upload1
+    #    url-prefix与url-effect-java-package 要共同指定
+    #    url-prefix: '/'
+    #    url-effect-java-package: com.github.md.web,com.aaaa.bbbb,com.bbbb.aaaa
+
+    #    upload:
+    #      base-upload-path: ./upload1
     event-enabled: true
     component:
       replace-from-json-file: true
@@ -35,17 +39,17 @@ md:
       meta-field-enabled: true
       component-instance-enabled: true
     db-source:
-#      ds1:
-      #        username: root
-      #        password: gongwei911
-      #        url: jdbc:mysql://192.168.9.187:3309/metadata?useSSL=false&characterEncoding=utf-8
-      #        driver-class-name: com.mysql.jdbc.Driver
-      #        type: com.alibaba.druid.pool.DruidDataSource
-      ds2:
-        username: root
-        password: gongwei911
-        url: jdbc:mysql://192.168.9.187:3309/mcms?useSSL=false&characterEncoding=utf-8
-        driver-class-name: com.mysql.jdbc.Driver
-        type: com.alibaba.druid.pool.DruidDataSource
+    #      ds1:
+    #        username: root
+    #        password: gongwei911
+    #        url: jdbc:mysql://192.168.9.187:3309/metadata?useSSL=false&characterEncoding=utf-8
+    #        driver-class-name: com.mysql.jdbc.Driver
+    #        type: com.alibaba.druid.pool.DruidDataSource
+#      ds2:
+#        username: root
+#        password: gongwei911
+#        url: jdbc:mysql://192.168.9.232:3306/mcms?useSSL=false&characterEncoding=utf-8
+#        driver-class-name: com.mysql.jdbc.Driver
+#        type: com.alibaba.druid.pool.DruidDataSource
 server:
   port: 8888
