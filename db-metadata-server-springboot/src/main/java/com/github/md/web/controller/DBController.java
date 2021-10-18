@@ -1,9 +1,10 @@
 package com.github.md.web.controller;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
+import com.github.md.analysis.SpringAnalysisManager;
 import com.github.md.analysis.component.ComponentType;
 import com.github.md.analysis.db.Table;
+import com.github.md.analysis.kit.Kv;
+import com.github.md.analysis.kit.Ret;
 import com.github.md.analysis.meta.IMetaObject;
 import com.github.md.web.AppConst;
 import com.github.md.web.ServiceManager;
@@ -12,15 +13,17 @@ import com.github.md.web.kit.InitKit;
 import com.github.md.web.ui.MetaObjectViewAdapter;
 import com.github.md.web.ui.OptionsKit;
 import com.github.md.web.ui.UIManager;
-import com.github.md.analysis.kit.Kv;
-import com.github.md.analysis.kit.Ret;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -108,7 +111,40 @@ public class DBController extends ControllerAdapter {
 
         // 根据固定文件(defaultInstance.json和defaultObject.json)更新元数据、实例配置
         InitKit.me().updateMetaObjectConfig().updateInstanceConfig();
+
+        initRouterAndMenuRecord();
         return Ret.ok();
+    }
+
+    private void initRouterAndMenuRecord() {
+        /* 初始化默认根路由 */
+        Record rootRouter = new Record();
+        rootRouter.set("id", 0);
+        rootRouter.set("pid", "");
+        rootRouter.set("cn", "默认跟路由");
+        rootRouter.set("name", "Default");
+        rootRouter.set("path", "/default");
+        rootRouter.set("redirect", "");
+        rootRouter.set("component", "AdminLayout");
+        rootRouter.set("components", "{}");
+        rootRouter.set("meta", "{}");
+        rootRouter.set("created_time", new Date());
+        rootRouter.set("created_by", "db-meta-web-devUser");
+        SpringAnalysisManager.me().dbMain().save("meta_router", rootRouter);
+
+        /* 初始化默认菜单 */
+        Record rootMenu = new Record();
+        rootMenu.set("id", 0);
+        rootMenu.set("pid", "");
+        rootMenu.set("title", "业务菜单");
+        rootMenu.set("hidden", 0);
+        rootMenu.set("disable", 1);
+        rootMenu.set("icon", "el-icon-s-grid");
+        rootMenu.set("path", "");
+        rootMenu.set("order_num", 0);
+        rootMenu.set("created_time", new Date());
+        rootMenu.set("created_by", "db-meta-web-devUser");
+        SpringAnalysisManager.me().dbMain().save("meta_menu", rootMenu);
     }
 
     private void preConditionCheck() {
