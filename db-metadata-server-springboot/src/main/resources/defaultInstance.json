@@ -58,7 +58,17 @@
         }
       }
     },
-    "TableView": {},
+    "TableView": {
+      "_fields": {
+        "is_sys": {
+          "component_name": "DropDownBox",
+          "data_url": "/dict?key=yn",
+          "conf": {
+            "multiple": false
+          }
+        }
+      }
+    },
     "FormView": {
       "_fields": {
         "config": {

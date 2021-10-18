@@ -126,6 +126,8 @@
       },
       "is_sys": {
         "config": {
+          "updateStatus": 30,
+          "addStatus": 30,
           "isSearch": false
         }
       },
