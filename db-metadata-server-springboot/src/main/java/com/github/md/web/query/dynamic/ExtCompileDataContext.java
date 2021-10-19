@@ -17,10 +17,10 @@ public class ExtCompileDataContext implements Context {
     @Override
     public Map data() {
         Map data = new HashMap();
-        for (Class<VariableDefinition> variableDefinitionClass : CompileManager.getCompileDataStructure()) {
+        for (Class<? extends VariableDefinition<?>> variableDefinitionClass : CompileManager.getCompileDataStructure()) {
             try {
                 VariableDefinition instance = variableDefinitionClass.newInstance();
-                data.put(instance.name(), instance.init());
+                data.put(instance.name(), instance.getValue());
             } catch (InstantiationException | IllegalAccessException e) {
                 log.error(e.getMessage(), e);
             }

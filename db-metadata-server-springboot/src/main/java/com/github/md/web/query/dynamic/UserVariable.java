@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * <p> @author konbluesky </p>
  */
-public class UserVariable implements VariableDefinition {
+public class UserVariable implements VariableDefinition<User> {
 
     private final HttpServletRequest request;
 
@@ -25,7 +25,7 @@ public class UserVariable implements VariableDefinition {
     }
 
     @Override
-    public Object init() {
+    public User getValue() {
         User user = UserManager.me().getUser(request);
         return user;
     }

@@ -1,6 +1,7 @@
 package com.github.md.web.query.dynamic;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,9 +15,17 @@ import java.util.Collection;
 public class CompileManager {
 
     @Getter
-    private static final Collection<Class> compileDataStructure = new ArrayList<>();
+    private static final Collection<Class<? extends VariableDefinition<?>>> compileDataStructure = new ArrayList<>();
 
-    public static void register(Class<? extends VariableDefinition> variableDefinition) {
+    @Getter
+    @Setter
+    private static CompileRuntimeFactory compileRuntimeFactory;
+
+    static {
+        compileRuntimeFactory = new DefaultCompileRuntimeFactory();
+    }
+
+    public static void register(Class<? extends VariableDefinition<?>> variableDefinition) {
         compileDataStructure.add(variableDefinition);
     }
 }

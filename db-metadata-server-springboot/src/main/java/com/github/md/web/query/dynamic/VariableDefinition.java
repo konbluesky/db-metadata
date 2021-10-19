@@ -6,7 +6,7 @@ package com.github.md.web.query.dynamic;
  *
  * <p> @author konbluesky </p>
  */
-public interface VariableDefinition {
+public interface VariableDefinition<T> {
 
     /**
      * 模板中调用时指定的变量名
@@ -20,5 +20,5 @@ public interface VariableDefinition {
      *
      * @return
      */
-    Object init();
+    T getValue();
 }
