@@ -13,7 +13,7 @@ import com.github.md.web.component.ViewFactory;
 import com.github.md.web.kit.SqlParaExt;
 import com.github.md.web.query.QueryConditionForMetaObject;
 import com.github.md.web.query.QueryHelper;
-import com.github.md.web.query.dynamic.CompileRuntime;
+import com.github.md.web.query.dynamic.CompileManager;
 import com.github.md.web.ui.OptionsKit;
 import com.google.common.base.Preconditions;
 import com.jfinal.plugin.activerecord.Page;
@@ -87,7 +87,7 @@ public class FindBoxController extends ControllerAdapter {
         QueryConditionForMetaObject queryConditionForMetaObject = new QueryConditionForMetaObject(metaObject, null);
         SqlParaExt sqlPara = queryConditionForMetaObject.resolve(getRequest().getParameterMap(), fields, excludeFields);
 
-        String compileWhere = new CompileRuntime().compile(metaObject.configParser().where(), getRequest());
+        String compileWhere = CompileManager.getCompileRuntimeFactory().createCompileRuntime().compile(metaObject.configParser().where(), getRequest());
         Page<Record> result = metaService().paginate(queryHelper.getPageIndex(),
                                                      queryHelper.getPageSize(),
                                                      metaObject,

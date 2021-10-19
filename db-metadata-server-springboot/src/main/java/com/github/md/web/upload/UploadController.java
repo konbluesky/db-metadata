@@ -57,8 +57,8 @@ public class UploadController extends ControllerAdapter {
 
         IMetaField metaField = ServiceManager.metaService().findFieldByCode(objectCode, fieldCode);
 
-        Preconditions.checkArgument(metaField.configParser().isFile(), "对象{}-字段{}未配置文件属性不正确: 请配置元字段类型为文件", objectCode, fieldCode);
-        Preconditions.checkArgument(request.getFileMap().size() > 0 && request.getFileMap().size() == 1, "该接口仅作为单文件上传用,对象{}-字段{}", objectCode, fieldCode);
+        Preconditions.checkArgument(metaField.configParser().isFile(), "对象%s-字段%s未配置文件属性不正确: 请配置元字段类型为文件", objectCode, fieldCode);
+        Preconditions.checkArgument(request.getFileMap().size() > 0 && request.getFileMap().size() == 1, "该接口仅作为单文件上传用,对象%s-字段%s", objectCode, fieldCode);
 
         List<MultipartFile> uploadFiles = new ArrayList<>();
         request.getFileMap().forEach((k, v) -> {

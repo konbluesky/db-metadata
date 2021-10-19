@@ -1,7 +1,7 @@
 package com.github.md.web.ui;
 
 import com.github.md.web.ServiceManager;
-import com.github.md.web.query.dynamic.CompileRuntime;
+import com.github.md.web.query.dynamic.CompileManager;
 import com.github.md.web.query.dynamic.DefaultContext;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
@@ -154,9 +154,9 @@ public class OptionsKit {
                     if (configWrapper.isSql()) {
                         log.info("{}-{} has sql translation logic:{}", field.objectCode(), field.fieldCode(), configWrapper.isSql());
                         String dbConfig = StrKit.defaultIfBlank(configWrapper.dbConfig(), field.getParent().schemaName());
-                        String compileSql = new CompileRuntime().compile(configWrapper.scopeSql(),
-                                                                         ServiceManager.quickJudge().getRequest(),
-                                                                         new DefaultContext(record.getColumns()));
+                        String compileSql = CompileManager.getCompileRuntimeFactory().createCompileRuntime().compile(configWrapper.scopeSql(),
+                                                                                                                     ServiceManager.quickJudge().getRequest(),
+                                                                                                                     new DefaultContext(record.getColumns()));
 
                         Kv mapped = transIdCnFlatMapBySql(compileSql, dbConfig);
                         mappeds.put(field.fieldCode(), mapped);

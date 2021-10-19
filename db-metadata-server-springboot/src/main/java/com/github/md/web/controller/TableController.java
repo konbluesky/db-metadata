@@ -1,6 +1,7 @@
 package com.github.md.web.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.github.md.web.query.dynamic.CompileManager;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.github.md.analysis.meta.IMetaField;
@@ -19,7 +20,6 @@ import com.github.md.web.kit.tree.TreeKit;
 import com.github.md.web.kit.tree.TreeNode;
 import com.github.md.web.query.QueryConditionForMetaObject;
 import com.github.md.web.query.QueryHelper;
-import com.github.md.web.query.dynamic.CompileRuntime;
 import com.github.md.web.ui.OptionsKit;
 import com.github.md.analysis.kit.Kv;
 import com.github.md.analysis.kit.Ret;
@@ -80,7 +80,7 @@ public class TableController extends ControllerAdapter {
         QueryConditionForMetaObject queryConditionForMetaObject = new QueryConditionForMetaObject(metaObject, filteredFields);
         SqlParaExt sqlPara = queryConditionForMetaObject.resolve(getRequest().getParameterMap(), fields, excludeFields);
         /* 编译where后条件 */
-        String compileWhere = new CompileRuntime().compile(metaObject.configParser().where(), getRequest());
+        String compileWhere = CompileManager.getCompileRuntimeFactory().createCompileRuntime().compile(metaObject.configParser().where(), getRequest());
 
         /* pointCut构建 */
         QueryPointCut queryPointCut = metaObject.configParser().queryPointCut();
@@ -229,7 +229,7 @@ public class TableController extends ControllerAdapter {
         QueryConditionForMetaObject queryConditionForMetaObject = new QueryConditionForMetaObject(metaObject, filteredFields);
         SqlParaExt sqlPara = queryConditionForMetaObject.resolve(getRequest().getParameterMap(), fields, excludeFields);
 
-        String compileWhere = new CompileRuntime().compile(metaObject.configParser().where(), getRequest());
+        String compileWhere = CompileManager.getCompileRuntimeFactory().createCompileRuntime().compile(metaObject.configParser().where(), getRequest());
         List<Record> result = businessService().findData(metaObject,
                                                          sqlPara.getSelect(),
                                                          MetaSqlKit.where(sqlPara.getSql(), compileWhere, metaObject.configParser().orderBy()),

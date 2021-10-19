@@ -5,7 +5,7 @@ import com.github.md.analysis.meta.IMetaObject;
 import com.github.md.analysis.meta.MetaFieldConfigParse;
 import com.github.md.web.WebException;
 import com.github.md.web.query.QueryHelper;
-import com.github.md.web.query.dynamic.CompileRuntime;
+import com.github.md.web.query.dynamic.CompileManager;
 import com.github.md.web.ui.OptionsKit;
 import com.github.md.analysis.kit.Kv;
 import com.github.md.analysis.kit.Ret;
@@ -48,7 +48,7 @@ public class OptionsController extends ControllerAdapter {
         if (metaFieldConfigParse.isSql()) {
             IMetaObject metaObject = metaField.getParent();
             String dbConfig = StrKit.defaultIfBlank(metaFieldConfigParse.dbConfig(), metaObject.schemaName());
-            String compileSql = new CompileRuntime().compile(metaFieldConfigParse.scopeSql(), getRequest());
+            String compileSql = CompileManager.getCompileRuntimeFactory().createCompileRuntime().compile(metaFieldConfigParse.scopeSql(), getRequest());
             List<Kv> options = OptionsKit.transKeyValueBySql(compileSql, dbConfig);
             return Ret.ok("data", options);
         }

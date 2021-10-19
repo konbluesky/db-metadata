@@ -21,6 +21,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * <pre>
+ * 表单数据的构建是重要的一步，通过表单在新建和更新操作时要构建可靠的MetaData对象
+ * 1. 根据MetaObject来从ParamMap中提取对象字段
+ * 2. 根据metaField中的配置对前端传入的Value做一些转换和校验，去除一些默认值和无效值
+ * </pre>
  * <p> @Date : 2019/10/31 </p>
  * <p> @Project : db-meta-serve</p>
  *

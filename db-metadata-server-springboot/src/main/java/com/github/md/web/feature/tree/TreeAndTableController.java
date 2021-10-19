@@ -22,7 +22,7 @@ import com.github.md.web.query.FormDataFactory;
 import com.github.md.web.query.QueryConditionForMetaObject;
 import com.github.md.web.query.QueryHelper;
 import com.github.md.web.query.QueryUrlBuilder;
-import com.github.md.web.query.dynamic.CompileRuntime;
+import com.github.md.web.query.dynamic.CompileManager;
 import com.github.md.web.ui.MetaObjectViewAdapter;
 import com.github.md.web.ui.OptionsKit;
 import com.github.md.web.ui.UIManager;
@@ -198,7 +198,7 @@ public class TreeAndTableController extends ControllerAdapter {
         QueryConditionForMetaObject queryConditionForMetaObject = new QueryConditionForMetaObject(metaObject, filteredFields);
         SqlParaExt sqlPara = queryConditionForMetaObject.resolve(getRequest().getParameterMap(), fields, excludeFields);
         /** 编译where后条件 */
-        String compileWhere = new CompileRuntime().compile(metaObject.configParser().where(), getRequest());
+        String compileWhere = CompileManager.getCompileRuntimeFactory().createCompileRuntime().compile(metaObject.configParser().where(), getRequest());
 
         /** pointCut构建 */
         QueryPointCut queryPointCut = (QueryPointCut) treeAndTableConfig.getTreeFeatureIntercept().tableIntercept();
