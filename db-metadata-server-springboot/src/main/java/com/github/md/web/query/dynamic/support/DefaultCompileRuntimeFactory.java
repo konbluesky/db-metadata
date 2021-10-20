@@ -1,4 +1,7 @@
-package com.github.md.web.query.dynamic;
+package com.github.md.web.query.dynamic.support;
+
+import com.github.md.web.query.dynamic.CompileRuntime;
+import com.github.md.web.query.dynamic.CompileRuntimeFactory;
 
 /**
  * 默认编译使用JFinalEnjoy引擎，该引擎打包在JFinal ActiveRecord Plugin中；

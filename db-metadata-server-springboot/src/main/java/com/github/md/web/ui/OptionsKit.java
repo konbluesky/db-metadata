@@ -2,7 +2,7 @@ package com.github.md.web.ui;
 
 import com.github.md.web.ServiceManager;
 import com.github.md.web.query.dynamic.CompileManager;
-import com.github.md.web.query.dynamic.DefaultContext;
+import com.github.md.web.query.dynamic.support.DefaultContext;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;

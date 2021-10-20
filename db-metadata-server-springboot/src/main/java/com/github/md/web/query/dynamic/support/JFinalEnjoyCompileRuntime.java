@@ -1,5 +1,8 @@
-package com.github.md.web.query.dynamic;
+package com.github.md.web.query.dynamic.support;
 
+import com.github.md.web.query.dynamic.CompileRuntime;
+import com.github.md.web.query.dynamic.Context;
+import com.github.md.web.query.dynamic.QueryCompileException;
 import com.jfinal.kit.StrKit;
 import com.jfinal.template.Engine;
 import com.jfinal.template.Template;

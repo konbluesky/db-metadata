@@ -1,5 +1,8 @@
-package com.github.md.web.query.dynamic;
+package com.github.md.web.query.dynamic.support;
 
+import com.github.md.web.query.dynamic.CompileManager;
+import com.github.md.web.query.dynamic.Context;
+import com.github.md.web.query.dynamic.VariableDefinition;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
