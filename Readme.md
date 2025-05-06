@@ -1,5 +1,5 @@
 # DB MetaData Serve
-> 工程的缩写DBMS与数据库DBMS(Database Management System)殊途同归,融入了基本业务元素.
+> 基于DB元数据的快速开发框架，工程的缩写DBMS与数据库DBMS(Database Management System)殊途同归,融入了基本业务元素.
 > 
 ## 介绍
 >对于快速开发框架和快速开发平台的定义,一个具备基本开发工具的整合后框架,同时具备一些基本的模块(RBAC权限,菜单,用户,字典等)的脚手架.
