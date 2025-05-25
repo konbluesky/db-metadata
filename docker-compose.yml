@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: db-metadata-mysql
+    environment:
+      MYSQL_DATABASE: 'db_metadata'
+      MYSQL_ROOT_PASSWORD: 'root123'
+      MYSQL_USER: 'dbmeta'
+      MYSQL_PASSWORD: 'dbmeta123'
+      MYSQL_INITDB_SKIP_TZINFO: 1
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/script/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - ./db/script/wisdom-metadata.sql:/docker-entrypoint-initdb.d/02-schema.sql
+    command: 
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - "8000:80"
+    depends_on:
+      - mysql
+
+  backend:
+    build:
+      context: .
+      dockerfile: db-metadata-server-springboot/Dockerfile
+    container_name: db-metadata-server
+    ports:
+      - "8080:8888"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_metadata?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: dbmeta
+      SPRING_DATASOURCE_PASSWORD: dbmeta123
+      SPRING_PROFILES_ACTIVE: prod
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./db-metadata-web
+      dockerfile: Dockerfile
+    container_name: db-metadata-web
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
