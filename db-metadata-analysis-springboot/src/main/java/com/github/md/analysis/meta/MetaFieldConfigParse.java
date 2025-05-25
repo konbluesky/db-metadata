@@ -57,7 +57,9 @@ public class MetaFieldConfigParse extends MetaData {
         if (jsonArray == null) {
             jsonArray = new JSONArray();
         }
-        return jsonArray.toArray(new String[jsonArray.size()]);
+//        return jsonArray.toArray(new String[jsonArray.size()]);
+        // 使用 stream 转换以避免 toArray 的兼容问题
+        return jsonArray.stream().map(Object::toString).toArray(String[]::new);
     }
 
     public boolean isOptions() {

@@ -31,9 +31,9 @@ public class JsonUserPermit implements MRPermit<User, MResource> {
         JSONArray users = JSON.parseObject(jsonString).getJSONArray("rules");
         List<JSONObject> userLists = users.toJavaList(JSONObject.class);
         for (JSONObject u : userLists) {
-            String[] resoutces = u.getJSONArray("resources").toArray(new String[0]);
-            for (String s : resoutces) {
-                userPermits.put(u.getString("userId"), s);
+            Object[] resoutces = u.getJSONArray("resources").toArray(new Object[0]);
+            for (Object s : resoutces) {
+                userPermits.put(u.getString("userId"), String.valueOf(s));
             }
         }
     }
