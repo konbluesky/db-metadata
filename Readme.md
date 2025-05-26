@@ -38,6 +38,11 @@
 ```shell
 docker-compose up
 ```
+
+- phpmyadmin : `http://localhost:8000`  用户名：`root`  密码：`root123` 
+- 系统前端 : `http://localhost` 如图所示完成初始化； 
+  - ![初始化](db/images/init.png)
+
 ### 依赖配置
 ### 集成
 
