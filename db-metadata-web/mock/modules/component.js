@@ -102,7 +102,6 @@ export default [
             const {objectCode: oc, componentCode: cc} = config.query;
             console.log('mock: /component/meta, oc: %s, cc: %s', oc, cc);
             const data = utils.merge(componentMetas[oc + '&' + cc], defaultMeta[cc]);
-            debugger;
             return {
                 code: 200,
                 state: 'ok',
@@ -113,7 +112,7 @@ export default [
     {
         url: '/tree/list?objectCode=meta_object',
         type: 'get',
-        response: config => {
+        response: () => {
             console.log('mock: /tree/list?objectCode=meta_object');
             return {
                 code: 200,
