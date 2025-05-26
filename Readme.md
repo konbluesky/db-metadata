@@ -20,21 +20,17 @@
 ### 技术栈
 - SpringBoot
 - JFinal ActiveRecord
-- Mysql 5.7 / Druid 
-- Jdk1.8
+- Mysql 8.0 / Druid 
+- JDK 17
 - Guava
 - FastJson
 
 ### 能干什么
-- 迅速构建一个CRUD模块
-- 各类模板配置 
-    - 主子表   
-    - 单表
-    - 树表
-- 图形样式设计
+- 0代码构建一个CRUD模块，支持树表、主子表、单表的增删改查
+- Form 支持在线图形拖拽配置设计
 - 可当纯后端提供数据接口
 - 可前后端一起使用
-- springboot支持
+- 可作为内置模块 SpringBoot支持
 
 ## 快速开始
 ### 工程结构
@@ -46,20 +42,25 @@
 └── db-metadata-web
 ```
 ### 安装部署
+```shell
+docker-compose up
+```
 ### 依赖配置
 ### 集成
 
 ## 基础术语
 #### 元对象
->《Thinking in Java》开篇就写到“一切皆对象”，Linux世界中“一切皆文件”，在DBMS中可以理解成一切的一切都离不开“元对象”；
+《Thinking in Java》开篇就写到“一切皆对象”，Linux世界中“一切皆文件”，在DBMS中可以理解成一切的一切都离不开“元对象”；
 什么是元对象，“元数据”是描述数据的数据，那么元对象就是描述对象的对象,狭隘的理解，一个元对象可以代表一个“表”，“一个视图”，“一类字段集合”
 关系型数据库中可以通过DB的元信息来构建元对象，非关系型场景下可以用过一些灵活的schema来定义
 
 #### 元子段
-
+依托于元对象，元子段描述对象中的字段,定义了字段的属性和页面编辑的行为，比如字段类型、字段长度、字段是否为空、字段是否为索引、字段是否为主键等等;
+页面行为诸如表单新增、修改时状态设置（只读，只写，可读写,字典自动转义等常规业务支持）。
 
 #### Component
-> 组件的抽象是为了服务与前端的展示，每一个前端框架种组件都可以抽象为一个组件
+组件的抽象是为了服务与前端做的展示层配置，每一个前端框架种组件都可以抽象为一个组件，组件有自己独立的前端设置
+
 ```
 - 数据展示(ViewComponent)
     - 表格组件(依赖元对象{1,n})(TableView)
@@ -121,6 +122,17 @@
 
 >DBMS种权限核心接口是MResource(资源)，MRPermit(资源判定器),MRLoader(资源加载器)
 ![元对象接口](db/images/auth.png)
+
+
+### 系统截图
+
+![](db/images/screenshot/1.png)
+![](db/images/screenshot/2.png)
+![](db/images/screenshot/3.png)
+![](db/images/screenshot/4.png)
+![](db/images/screenshot/5.png)
+![](db/images/screenshot/6.png)
+
 
 ### 核心数据结构
 
