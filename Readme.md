@@ -1,32 +1,34 @@
-# DB MetaData Serve
-> 基于DB元数据的快速开发框架，工程的缩写DBMS与数据库DBMS(Database Management System)殊途同归,融入了基本业务元素.
-> 对于快速开发框架和快速开发平台的定义,一个具备基本开发工具的整合后框架,同时具备一些基本的模块(RBAC权限,菜单,用户,字典等)的脚手架.
-> 这些框架的初衷都是想让开发不必在重头搭建一套完备的系统后,才开始开发和自己业务相关的模块,尽可能把"公共"模块抽离,达到复用的目的;
+# DB MetaData Server
+> Chinese Readme: [Readme_cn.md](Readme_cn.md) | 
+> English Readme: [Readme.md](Readme.md)
+
+> A rapid development framework based on database metadata. The abbreviation DBMS shares the same goal as the database DBMS (Database Management System), integrating basic business elements.
+> For the definition of rapid development frameworks and platforms, it's a scaffold that integrates basic development tools and includes fundamental modules (RBAC permissions, menus, users, dictionaries, etc.).
+> The original intention of these frameworks is to allow developers to start developing business-related modules without having to build a complete system from scratch, extracting "common" modules as much as possible to achieve reusability.
 >
-> 但现状是一个大型项目或系统中通常有很多子系统或子模块组成,并不是每个子模块都要具有完整的用户权限、登录、菜单管理、字典等等功能。
-> 如果是在人员有限且项目规模不大,而且又是从0->1这个阶段开始的话，选择任何一个开源的快速开发框架都是合适的，如果系统非0->1这个阶段已经上线且具备一些功能了，再引入快速开发框架的效果和成本就值得考虑了；
+> However, the current situation is that large projects or systems usually consist of many subsystems or submodules, and not every submodule needs complete user permissions, login, menu management, dictionary functions, etc.
+> If you have limited personnel, a small project scale, and are starting from the 0->1 stage, choosing any open-source rapid development framework is appropriate. If the system is not in the 0->1 stage, already online with some features, the effectiveness and cost of introducing a rapid development framework are worth considering.
 >
-> DMBS 的定位首先是一套功能引擎,其次才是开发平台
+> DBMS is positioned first as a functional engine, and secondly as a development platform.
 > 
 
-
-### 技术栈
+### Technology Stack
 - SpringBoot
 - JFinal ActiveRecord
-- Mysql 8.0 / Druid 
+- MySQL 8.0 / Druid 
 - JDK 17
 - Guava
 - FastJson
 
-### 能干什么
-- 0代码构建一个CRUD模块，支持树表、主子表、单表的增删改查
-- Form 支持在线图形拖拽配置设计
-- 可当纯后端提供数据接口
-- 可前后端一起使用
-- 可作为内置模块 SpringBoot支持
+### What Can It Do
+- Build a CRUD module with zero code, supporting tree tables, master-detail tables, and single table CRUD operations
+- Form supports online graphical drag-and-drop configuration design
+- Can serve as a pure backend providing data interfaces
+- Can be used with both frontend and backend
+- Can be used as a built-in module with SpringBoot support
 
-## 快速开始
-### 工程结构
+## Quick Start
+### Project Structure
 ```bash
 ├── db
 ├── db-metadata-analysis-springboot
@@ -34,95 +36,94 @@
 ├── db-metadata-server-springboot
 └── db-metadata-web
 ```
-### 安装部署
+### Installation and Deployment
 ```shell
 docker-compose up
 ```
 
-- phpmyadmin : `http://localhost:8000`  用户名：`root`  密码：`root123` 
-- 系统前端 : `http://localhost` 如图所示完成初始化； 
-  - ![初始化](db/images/init.png)
+- phpMyAdmin: `http://localhost:8000` Username: `root` Password: `root123` 
+- System Frontend: `http://localhost` Complete initialization as shown in the figure; 
+  - ![Initialization](db/images/init.png)
 
-### 依赖配置
-### 集成
+### Dependency Configuration
+### Integration
 
-## 基础术语
-#### 元对象
-《Thinking in Java》开篇就写到“一切皆对象”，Linux世界中“一切皆文件”，在DBMS中可以理解成一切的一切都离不开“元对象”；
-什么是元对象，“元数据”是描述数据的数据，那么元对象就是描述对象的对象,狭隘的理解，一个元对象可以代表一个“表”，“一个视图”，“一类字段集合”
-关系型数据库中可以通过DB的元信息来构建元对象，非关系型场景下可以用过一些灵活的schema来定义
+## Basic Terminology
+#### Meta Object
+"Thinking in Java" begins with "Everything is an object", and in the Linux world "Everything is a file". In DBMS, it can be understood that everything revolves around "meta objects".
+What is a meta object? "Metadata" is data that describes data, so a meta object is an object that describes objects. In a narrow sense, a meta object can represent a "table", "a view", or "a collection of field types".
+In relational databases, meta objects can be constructed through DB metadata. In non-relational scenarios, they can be defined through flexible schemas.
 
-#### 元子段
-依托于元对象，元子段描述对象中的字段,定义了字段的属性和页面编辑的行为，比如字段类型、字段长度、字段是否为空、字段是否为索引、字段是否为主键等等;
-页面行为诸如表单新增、修改时状态设置（只读，只写，可读写,字典自动转义等常规业务支持）。
+#### Meta Field
+Based on meta objects, meta fields describe the fields within objects, defining field attributes and page editing behaviors, such as field type, field length, whether the field is nullable, whether it's an index, whether it's a primary key, etc.
+Page behaviors include form addition, modification state settings (read-only, write-only, read-write, dictionary auto-translation, and other common business support).
 
 #### Component
-组件的抽象是为了服务与前端做的展示层配置，每一个前端框架种组件都可以抽象为一个组件，组件有自己独立的前端设置
+Component abstraction is designed to serve frontend display layer configuration. Each component in a frontend framework can be abstracted as a component, with its own independent frontend settings.
 
 ```
-- 数据展示(ViewComponent)
-    - 表格组件(依赖元对象{1,n})(TableView)
-    - 表单组件(依赖元对象{1,n})(FormView)
-    - 树型组件(依赖元对象{1,n})(TreeView)
-    - 搜索组件(依赖元对象{1,n})
-- 表单(FormView)
-    - 单选组件(元子段)FormField
-    - 多选组件(元子段)
-    - 输入组件(元子段)
-    - 业务查询组件
-    - 开关组件(元子段)
-    - 日期组件(元子段)
-    - 范围组件(元子段)
-    - 上传组件(元子段)
+- Data Display (ViewComponent)
+    - Table Component (depends on meta object{1,n}) (TableView)
+    - Form Component (depends on meta object{1,n}) (FormView)
+    - Tree Component (depends on meta object{1,n}) (TreeView)
+    - Search Component (depends on meta object{1,n})
+- Form (FormView)
+    - Radio Component (meta field) FormField
+    - Checkbox Component (meta field)
+    - Input Component (meta field)
+    - Business Query Component
+    - Switch Component (meta field)
+    - Date Component (meta field)
+    - Range Component (meta field)
+    - Upload Component (meta field)
 ```
-#### Component实例
-> 单纯的组件是没有灵魂的，元对象和元字段是组件的数据灵魂
+#### Component Instance
+> Pure components have no soul; meta objects and meta fields are the data soul of components
 > 
-#### 模板
-什么是模板，模板是针对场景的抽象，一对一CURD，一对多CRUD等等
-模板需要具备：前端的模板、后端的模板逻辑、输入和输出、可预见的一些扩展；
+#### Template
+What is a template? A template is an abstraction for scenarios, such as one-to-one CRUD, one-to-many CRUD, etc.
+Templates need to include: frontend templates, backend template logic, input and output, and some foreseeable extensions.
 
-#### 功能
-> 什么定义成功能？
-> 功能可以是一个按钮+背后的逻辑  
-> 功能可以是一个纯背后的逻辑  
-> 功能可以是一个页面  
-> 公式:
+#### Function
+> What is defined as a function?
+> A function can be a button + the logic behind it  
+> A function can be pure backend logic  
+> A function can be a page  
+> Formula:
 ```
-功能 = (SearchBar(Component) + UIConfig + 元对象) * n
-功能 = Table(Component) + UIConfig + 元对象
-功能 = 功能 * n
+Function = (SearchBar(Component) + UIConfig + Meta Object) * n
+Function = Table(Component) + UIConfig + Meta Object
+Function = Function * n
 ```
-### 设计
+### Design
 
-#### 总体架构图
-> 元对象,元子段,component等概念的层次结构,对应关系 
+#### Overall Architecture Diagram
+> Hierarchical structure and relationships of meta objects, meta fields, components, and other concepts
 ![](db/images/架构图.png)
-#### 通信图
-> 前端请求渲染-> 后端数据装配->配置载入->merge
-#### 数据库E-R图
+#### Communication Diagram
+> Frontend request rendering -> Backend data assembly -> Configuration loading -> merge
+#### Database E-R Diagram
 ![](db/images/e-r.png)
-#### 元对象-类图
-![元对象接口](db/images/MetaObject.png)
-#### Component-类图
-![元对象接口](db/images/component.png)
-#### Query模块
+#### Meta Object - Class Diagram
+![Meta Object Interface](db/images/MetaObject.png)
+#### Component - Class Diagram
+![Meta Object Interface](db/images/component.png)
+#### Query Module
 ![](db/images/IQueryCondition.png)
-#### 扩展
-> 为了能更好的融入其他系统，DBMS对常见的模块做了抽象，用少量的接口保证足够的灵活性
-##### 用户体系
-> 用户体系单独拎出可以作为一个庞大的子系统来开发，在DBMS种对用户做了一定抽象
+#### Extensions
+> To better integrate with other systems, DBMS abstracts common modules with minimal interfaces to ensure sufficient flexibility
+##### User System
+> The user system can be developed as a large subsystem when extracted separately. In DBMS, users are abstracted to some extent
 
-> 核心接口 User(用户实体接口)，LoginService（登录服务），UserService（用户查询服务）,UserFactory(工厂)
-![元对象接口](db/images/user.png)
-##### 权限体系
->DBMS并未实现RBAC之列的权限控制模块，而是留了扩展接口
+> Core interfaces: User (user entity interface), LoginService (login service), UserService (user query service), UserFactory (factory)
+![Meta Object Interface](db/images/user.png)
+##### Permission System
+> DBMS does not implement permission control modules like RBAC but provides extension interfaces
 
->DBMS种权限核心接口是MResource(资源)，MRPermit(资源判定器),MRLoader(资源加载器)
-![元对象接口](db/images/auth.png)
+> Core permission interfaces in DBMS are MResource (resource), MRPermit (resource validator), MRLoader (resource loader)
+![Meta Object Interface](db/images/auth.png)
 
-
-### 系统截图
+### System Screenshots
 
 ![](db/images/screenshot/1.png)
 ![](db/images/screenshot/2.png)
@@ -131,57 +132,54 @@ docker-compose up
 ![](db/images/screenshot/5.png)
 ![](db/images/screenshot/6.png)
 
+### Core Data Structures
 
-### 核心数据结构
+#### Various Configurations
+- Meta object config
+- Meta field config
+- Global component config
+- Component instance config
+- Function config
+> Configuration uses a global version number, referencing SVN, where the version number increments after any config change?
 
-#### 各类配置
-- 元对象 config
-- 元子段 config
-- 全局组件 config
-- 组件实例 config
-- 功能 config
-> 配置的使用了全局版本号,参考svn,即任一config变更后,版本号递增?
-
-## 技术债务
-- 系统为了获得动态能力,同时为了快速上线第一个版,底层采用了json存储配置,导致了上层数据搬运时不得不大量使用Kv对象(Map),调用链过长时很难确认当前Kv对象内部的数据
-为代码阅读和调试带来了成本和风险
-    > 在数据结构稳定后,关键的配置使用具体的模型来存放
-- DB上配置信息存放在json字段,虽保证了灵活度,但是不利于检索,Mysql5.7对于Json字段的支持有限
-- 元对象config,字段config,component.config,实例config,为了做到各层独立,分别设置了不同作用,不同意义的配置信息.在开始接触的时候对于这些
-配置信息需要消化的成本太高,而且config未做结构校验,很可能在功能大面积爆发时出现无用无效的脏字段
+## Technical Debt
+- To gain dynamic capabilities and quickly launch the first version, the system uses JSON storage for configurations at the bottom layer, leading to extensive use of Kv objects (Map) during upper-layer data transportation. When the call chain is too long, it's difficult to determine the internal data of the current Kv object, bringing costs and risks to code reading and debugging.
+    > After data structure stabilization, use specific models to store key configurations
+- Configuration information is stored in JSON fields in the database. While this ensures flexibility, it's not conducive to retrieval. MySQL 5.7 has limited support for JSON fields
+- Meta object config, field config, component config, instance config - to achieve independence at each layer, different configurations with different purposes and meanings are set separately. When first encountering these, the cost of understanding these configuration information is too high, and configs lack structural validation, which may lead to useless and invalid dirty fields when features explode on a large scale
 
 ## RoadMap
-- server 源代码方式集成,剥离db-metadata-server业务逻辑和容器有关的逻辑,目的为了上层使用其他mvc框架做支持;
-- 数据权限的设计
-    > 以元对象为基础,配合自定义的模板脚本片段,生成带有权限过滤内容的sql,以此来做数据权限
+- Server source code integration, separating db-metadata-server business logic from container-related logic, aiming to support other MVC frameworks at the upper layer
+- Data permission design
+    > Based on meta objects, combined with custom template script fragments, generate SQL with permission filtering content for data permissions
     ```
-        模板片段可以内置类似User,Group,Company等对象
-        权限判断可能是
-        if(user.role.is('组长'))
-            return Query,Add,Update
-        if(user.role.is('小弟'))
+        Template fragments can have built-in objects like User, Group, Company
+        Permission judgment might be:
+        if(user.role.is('team leader'))
+            return Query, Add, Update
+        if(user.role.is('member'))
             return Query
-        查看小组下的数据可能是
-        if(user.role.is('组长')&&user.role.has(query))
+        Viewing team data might be:
+        if(user.role.is('team leader') && user.role.has(query))
             return create_by in GroupIds
         
     ```
-- 丰富MResource的实现，增加不同纬度的验证（元对象纬度，模板纬度）,对Query模块的查询权限进行控制
-- 丰富对数据库视图支持ViewMetaObject,增加元对象属性设定,参考linux文件系统drwxrwxrwx
-- formbuilder 覆盖常用模板
-- Jsondiff的支持
-- springboot 深度集成(用spring完全接管datasource),充分支持spring方式创建router,controller,intercepter等jfinal组件
-- 耗时操作的缓存支持(ehcache+redis)
-- 对"功能"做版本控制,因功能渲染完全依靠数据配置,必须要保证发布后版本可控,目前元对象配置更新过以后,上游所有组件config会重新计算;
-- 目前表单仅支持单个元对象,复杂业务场景可能有同时编辑多张表的需求
-- 完善对spring容器的支持,目前还只是初步集成;
+- Enrich MResource implementations, add validation from different dimensions (meta object dimension, template dimension), control query permissions for the Query module
+- Enrich database view support ViewMetaObject, add meta object property settings, referencing Linux file system drwxrwxrwx
+- FormBuilder covering common templates
+- JSON diff support
+- Deep SpringBoot integration (fully managed datasource with Spring), full support for Spring-style creation of routers, controllers, interceptors, and other JFinal components
+- Cache support for time-consuming operations (ehcache + redis)
+- Version control for "functions" - since function rendering completely depends on data configuration, version control must be ensured after release. Currently, after meta object configuration updates, all upstream component configs are recalculated
+- Currently, forms only support single meta objects; complex business scenarios may require simultaneous editing of multiple tables
+- Improve support for Spring containers; currently only preliminary integration
 
-##### 一些参考
-- 做一切有利于"快"的需求
-- 计算机科学领域的任何问题都可以通过增加一个间接的中间层来解决
-    > Any problem  in computer science can be solved by anther layer of indirection.  
+##### Some References
+- Do everything beneficial to "speed"
+- Any problem in computer science can be solved by adding another layer of indirection
+    > Any problem in computer science can be solved by another layer of indirection.  
      https://cloud.tencent.com/developer/article/1491973
-- Eova ,jeesite,jeecg-boot,普元
-- Extjs,vue component
+- Eova, jeesite, jeecg-boot, Primeton
+- Extjs, vue component
 - APIJSON
-- GraphQL
+- GraphQL 
