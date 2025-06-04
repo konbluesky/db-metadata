@@ -27,6 +27,17 @@
 - Can be used with both frontend and backend
 - Can be used as a built-in module with SpringBoot support
 
+### System Screenshots
+
+![](db/images/screenshot/1.png)
+![](db/images/screenshot/2.png)
+![](db/images/screenshot/3.png)
+![](db/images/screenshot/4.png)
+![](db/images/screenshot/5.png)
+![](db/images/screenshot/6.png)
+
+
+
 ## Quick Start
 ### Project Structure
 ```bash
@@ -122,15 +133,6 @@ Function = Function * n
 
 > Core permission interfaces in DBMS are MResource (resource), MRPermit (resource validator), MRLoader (resource loader)
 ![Meta Object Interface](db/images/auth.png)
-
-### System Screenshots
-
-![](db/images/screenshot/1.png)
-![](db/images/screenshot/2.png)
-![](db/images/screenshot/3.png)
-![](db/images/screenshot/4.png)
-![](db/images/screenshot/5.png)
-![](db/images/screenshot/6.png)
 
 ### Core Data Structures
 
